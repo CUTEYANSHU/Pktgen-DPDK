@@ -25,21 +25,20 @@ endif
 
 # set the major version, which might be used by drivers and libraries
 # depending on the configuration options
-pver = meson.project_version().split('.')
-major_version = '@0@.@1@'.format(pver.get(0), pver.get(1))
+#pver = meson.project_version().split('.')
+#major_version = '@0@.@1@'.format(pver.get(0), pver.get(1))
 
-cflags += '-D__YEAR=' + pver.get(0)
-cflags += '-D__MONTH=' + pver.get(1)
-if pver.get(2).contains('-rc')
-	rc_ver = pver.get(2).split('-rc')
-	cflags += '-D__MINOR=' + rc_ver.get(0)
-	cflags += '-D__SUFFIX="-rc"'
-	cflags += '-D__RELEASE=' + rc_ver.get(1)
-else
-	cflags += '-D__MINOR=' + pver.get(2)
-	cflags += '-D__SUFFIX=""'
-	cflags += '-D__RELEASE=99'
-endif
+cflags += '-D__YEAR=' + pktgen_conf.get('PKTGEN_VER_YEAR').to_string()
+cflags += '-D__MONTH=' + pktgen_conf.get('PKTGEN_VER_MONTH').to_string()
+cflags += '-D__MINOR=' + pktgen_conf.get('PKTGEN_VER_MINOR').to_string()
+cflags += '-D__SUFFIX=' + pktgen_conf.get('PKTGEN_VER_SUFFIX')
+cflags += '-D__RELEASE=' + pktgen_conf.get('PKTGEN_VER_RELEASE').to_string()
+
+message('__YEAR    = ' + pktgen_conf.get('PKTGEN_VER_YEAR').to_string())
+message('__MONTH   = ' + pktgen_conf.get('PKTGEN_VER_MONTH').to_string())
+message('__MINOR   = ' + pktgen_conf.get('PKTGEN_VER_MINOR').to_string())
+message('__SUFFIX  = ' + pktgen_conf.get('PKTGEN_VER_SUFFIX'))
+message('__RELEASE = ' + pktgen_conf.get('PKTGEN_VER_RELEASE').to_string())
 
 deps = [global_deps]
 

@@ -22,7 +22,7 @@ extern "C" {
 #define PKTGEN_VER_YEAR		__YEAR
 #define PKTGEN_VER_MONTH	__MONTH
 #define PKTGEN_VER_MINOR	__MINOR
-#define PKTGEN_VER_SUFFIX	__SUFFIX
+#define PKTGEN_VER_SUFFIX	STRINGIFY(__SUFFIX)
 #define PKTGEN_VER_RELEASE	__RELEASE
 
 #define PKTGEN_VERSION		pktgen_version_str()

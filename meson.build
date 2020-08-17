@@ -15,11 +15,6 @@ pktgen_conf = configuration_data()
 # set up some global vars for compiler, platform, configuration, etc.
 cc = meson.get_compiler('c')
 
-dpdk_libraries = []
-dpdk_static_libraries = []
-dpdk_drivers = []
-dpdk_extra_ldflags = []
-dpdk_app_link_libraries = []
 pktgen_shared_libraries = []
 pktgen_static_libraries = []
 machine_args = ['-mavx']
@@ -28,6 +23,20 @@ global_deps = []
 
 pver = meson.project_version().split('.')
 major_version = '@0@.@1@'.format(pver.get(0), pver.get(1))
+
+pktgen_conf.set('PKTGEN_VER_YEAR', pver.get(0).to_int())
+pktgen_conf.set('PKTGEN_VER_MONTH', pver.get(1).to_int())
+
+if pver.get(2).contains('-rc')
+	rc_ver = pver.get(2).split('-rc')
+	pktgen_conf.set('PKTGEN_VER_MINOR', rc_ver.get(0).to_int())
+	pktgen_conf.set('PKTGEN_VER_SUFFIX', '-rc')
+	pktgen_conf.set('PKTGEN_VER_RELEASE', rc_ver.get(1).to_int())
+else
+	pktgen_conf.set('PKTGEN_VER_MINOR', pver.get(2).to_int())
+	pktgen_conf.set('PKTGEN_VER_SUFFIX', '')
+	pktgen_conf.set('PKTGEN_VER_RELEASE', 99)
+endif
 
 # enable extra warnings and disable any unwanted warnings
 warning_flags = [
